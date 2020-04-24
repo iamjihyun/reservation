@@ -1,8 +1,6 @@
 package kr.or.connect.reservation.dao;
 
-import static kr.or.connect.reservation.dao.ReservationDaoSqls.DELETE_BY_ID;
-import static kr.or.connect.reservation.dao.ReservationDaoSqls.SELECT_COUNT;
-import static kr.or.connect.reservation.dao.ReservationDaoSqls.SELECT_PAGING;
+import static kr.or.connect.reservation.dao.ReservationDaoSqls.*;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,13 +31,21 @@ public class ReservationDao {
 	                .withTableName("product")
 	                .usingGeneratedKeyColumns("id");
 	    }
+	 
 	//전체 조회
 	public List<Product> selectAll(Integer start, Integer limit, Integer cate) {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("start", start);
 		params.put("limit", limit);
-		params.put("cate", cate);
-		return jdbc.query(SELECT_PAGING, params, rowMapper);
+		
+		if(cate == 0) {
+			return jdbc.query(SELECT_PAGING_ALL, params, rowMapper);
+		}else {
+			params.put("cate", cate);
+			return jdbc.query(SELECT_PAGING, params, rowMapper);	
+		}
+		
+		
 	}
 	
 	//한개 추가
@@ -57,7 +63,11 @@ public class ReservationDao {
 	//데이터 몇 갠지?
 	public int selectCount(Integer cate) {
 		Map<String, ?> params = Collections.singletonMap("cate", cate);
-		return jdbc.queryForObject(SELECT_COUNT, params, Integer.class);
+		if(cate == 0) {
+			return jdbc.queryForObject(SELECT_COUNT_ALL, params, Integer.class);
+		}else {
+			return jdbc.queryForObject(SELECT_COUNT, params, Integer.class);
+		}
 	}
 
 }
