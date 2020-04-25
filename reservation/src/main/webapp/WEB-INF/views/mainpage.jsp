@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
 <meta charset="utf-8">
 <meta name="description"
 	content="네이버 예약, 네이버 예약이 연동된 곳 어디서나 바로 예약하고, 네이버 예약 홈(나의예약)에서 모두 관리할 수 있습니다.">
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
-	
 
 <title>네이버 예약</title>
 <link
@@ -67,7 +66,6 @@
 				</div>
 			</div>
 			<div class="section_event_tab">
-			<button type="button" id="ttt" onclick="method2();">안녕</button>
 				<ul class="event_tab_lst tab_lst_min">
 					<li class="item" data-category="0"><a class="anchor active">
 							<span>전체리스트</span>
@@ -160,8 +158,7 @@
 										다시 의기투합하여 한층 완성도 높아진 공연을 선보인다!</p>
 								</div>
 						</a></li>						
-					</ul>
-					
+					</ul>					
 					
 					
 					<ul class="lst_event_box">
@@ -202,7 +199,7 @@
 					</ul>
 					<!-- 더보기 -->
 					<div class="more">
-						<button class="btn">
+						<button class="btn" data-page="1" onclick="clickBtn(this);">
 							<span>더보기</span>
 						</button>
 					</div>
@@ -212,7 +209,7 @@
 	</div>
 	<footer>
 		<div class="gototop">
-			<a href="#" class="lnk_top"> <span class="lnk_top_text">TOP</span>
+			<a href="#" class="lnk_top"><span class="lnk_top_text">TOP</span>
 			</a>
 		</div>
 		<div class="footer">
@@ -222,33 +219,72 @@
 		</div>
 	</footer>
 
-
 <script>
-window.onload = function(){
-	ajax();
+	window.onload = function(){
+	//페이지가 로딩되면 ajax로 전체카테고리 데이터 조회하기
+	console.log("첫페이지");
+	ajax(0, "products");
 }
-function ajax() {
-	console.log("에이젝스 호출");
+    function makeTemplate(data, clickedName) {
+        var html = document.getElementById("itemList").innerHTML;
+        var resultHTML = "";
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].name === clickedName) {
+                resultHTML = html.replace("{name}", data[i].name)
+                    .replace("{favorites}", data[i].favorites.join(" "));
+                break;
+            }
+        }
+        document.querySelector(".content").innerHTML = resultHTML;
+    }
+function ajax(page, url){
+	console.log("ajax 호출");
 	   var oReq = new XMLHttpRequest();
 		
 	  oReq.addEventListener("load", function() {
-	    console.log(this.responseText);
+		  var data = JSON.parse(oReq.responseText);
+	    	console.log(data);
+          makeTemplate(data);
 	  });
 		
-	   oReq.open("GET", "products");
+	   oReq.open("GET", url);
 	   oReq.send();
 	}
-/* function method2(){
-	console.log("되니?");
-	var ggg = document.getElementById("ttt");
-	ggg.style.backgroundColor = "green";
-} */
+	
+	function clickBtn(dd){
+		var page = this.getAttribute("data-page");
+		
+		ajax(page,);
+	}
+
 </script>
 
+    <script type="rv-template" id="promotionItem">
+    <li class="item" style="background-image: url(http://211.249.62.123/productImages/${productId}/${productImageId});">
+        <a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
+            <div class="event_txt">
+                <h4 class="event_txt_tit"></h4>
+                <p class="event_txt_adr"></p>
+                <p class="event_txt_dsc"></p>
+            </div>
+        </a>
+    </li>
+    </script>
 
-
-
+    <script type="rv-template" id="itemList">
+        <li class="item">
+            <a href="detail.html?id=${id}" class="item_book">
+                <div class="item_preview">
+                    <img alt="${description}" class="img_thumb" src="http://211.249.62.123/productImages/${id}?type=th">
+                    <span class="img_border"></span>
+                </div>
+                <div class="event_txt">
+                    <h4 class="event_txt_tit"> <span>${description}</span> <small class="sm">${placeName}</small> </h4>
+                    <p class="event_txt_dsc">${content}</p>
+                </div>
+            </a>
+        </li>
+    </script>
 
 </body>
-
 </html>

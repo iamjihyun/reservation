@@ -21,7 +21,7 @@ import kr.or.connect.reservation.dto.Product;
 
 @Repository
 public class ReservationDao {
-	 private NamedParameterJdbcTemplate jdbc;
+	 private final NamedParameterJdbcTemplate jdbc;
 	 private SimpleJdbcInsert insertAction;
 	 private RowMapper<Product> rowMapper = BeanPropertyRowMapper.newInstance(Product.class);
 	 

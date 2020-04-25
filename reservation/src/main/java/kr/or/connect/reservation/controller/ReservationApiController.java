@@ -18,17 +18,18 @@ import kr.or.connect.reservation.service.ReservationService;
 	@RestController
 	@RequestMapping(path = "/products")
 	public class ReservationApiController {
+		//풀네임
 		@Autowired
 		ReservationService rService;
 
 		@GetMapping // guestbooks URL로 요청이 들어올 때, GET방식으로 들어오면 아래 메소드 실행.
 		public Map<String, Object> list(@RequestParam(name = "start", required = false, defaultValue = "0") int start,
-				@RequestParam(name = "cate", required = false, defaultValue = "1") int cate) {
+				@RequestParam(name = "cate", required = false, defaultValue = "0") int cate) {
 			System.out.println("들어온 start값 : " + start + ", 들어온 cate값 : " + cate);
 			
 			//전체 데이터 가져오기.
 			List<Product> list = rService.getProducts(start, cate);
-			System.out.println("셀렉해온 리스트 : " + list);
+			//System.out.println("셀렉해온 리스트 : " + list);
 			
 			//데이터 갯수 가져오기(4개..?)
 			int count = rService.getCount(cate);
