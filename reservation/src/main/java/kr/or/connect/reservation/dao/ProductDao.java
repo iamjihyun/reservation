@@ -1,6 +1,6 @@
 package kr.or.connect.reservation.dao;
 
-import static kr.or.connect.reservation.dao.ReservationDaoSqls.*;
+import static kr.or.connect.reservation.dao.ProductDaoSqls.*;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,12 +20,12 @@ import org.springframework.stereotype.Repository;
 import kr.or.connect.reservation.dto.Product;
 
 @Repository
-public class ReservationDao {
+public class ProductDao {
 	 private final NamedParameterJdbcTemplate jdbc;
 	 private SimpleJdbcInsert insertAction;
 	 private RowMapper<Product> rowMapper = BeanPropertyRowMapper.newInstance(Product.class);
 	 
-	 public ReservationDao(DataSource dataSource) {
+	 public ProductDao(DataSource dataSource) {
 	        this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	        this.insertAction = new SimpleJdbcInsert(dataSource)
 	                .withTableName("product")
@@ -68,6 +68,11 @@ public class ReservationDao {
 		}else {
 			return jdbc.queryForObject(SELECT_COUNT, params, Integer.class);
 		}
+	}
+
+	public Product selectOneProduct(int productid) {
+		Map<String, ?> params = Collections.singletonMap("productid", productid);
+		return jdbc.queryForObject(SELECT_BY_ID, params, rowMapper);
 	}
 
 }

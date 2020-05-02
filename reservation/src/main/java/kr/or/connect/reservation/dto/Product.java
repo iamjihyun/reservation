@@ -1,52 +1,41 @@
 package kr.or.connect.reservation.dto;
 
-import java.util.Date;
-
 public class Product {
-	private int id;
-	private int categoryId;
-	private String description;
+	
+	private int displayInfoId;
+	private String placeName;
 	private String content;
-	private String event;
-	private Date createDate;
-	private Date modifyDate;
+	private String description;
+	private int productId;
+	private String fileName;
 	
 	public Product() {}
 
-	public Product(int id, int categoryId, String description, String content, String event, Date createDate,
-			Date modifyDate) {
+	public Product(int displayInfoId, String placeName, String content, String description, int productId,
+			String fileName) {
 		super();
-		this.id = id;
-		this.categoryId = categoryId;
-		this.description = description;
+		this.displayInfoId = displayInfoId;
+		this.placeName = placeName;
 		this.content = content;
-		this.event = event;
-		this.createDate = createDate;
-		this.modifyDate = modifyDate;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
 		this.description = description;
+		this.productId = productId;
+		this.fileName = fileName;
+	}
+
+	public int getDisplayInfoId() {
+		return displayInfoId;
+	}
+
+	public void setDisplayInfoId(int displayInfoId) {
+		this.displayInfoId = displayInfoId;
+	}
+
+	public String getPlaceName() {
+		return placeName;
+	}
+
+	public void setPlaceName(String placeName) {
+		this.placeName = placeName;
 	}
 
 	public String getContent() {
@@ -57,35 +46,35 @@ public class Product {
 		this.content = content;
 	}
 
-	public String getEvent() {
-		return event;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setEvent(String event) {
-		this.event = event;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+	public int getProductId() {
+		return productId;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setProductId(int productId) {
+		this.productId = productId;
 	}
 
-	public Date getModifyDate() {
-		return modifyDate;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setModifyDate(Date modifyDate) {
-		this.modifyDate = modifyDate;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", categoryId=" + categoryId + ", description=" + description + ", content="
-				+ content + ", event=" + event + ", createDate=" + createDate + ", modifyDate=" + modifyDate + "]";
+		return "Product [displayInfoId=" + displayInfoId + ", placeName=" + placeName + ", content=" + content
+				+ ", description=" + description + ", productId=" + productId + ", fileName=" + fileName + "]";
 	}
-	
+
 	
 }

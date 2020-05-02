@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.TransactionManagementConfigure
 @EnableTransactionManagement
 public class DBConfig implements TransactionManagementConfigurer {
 	private String driverClassName = "com.mysql.cj.jdbc.Driver";
-
-	private String url = "jdbc:mysql://localhost:3306/reservation?serverTimezone=Asia/Seoul&useSSL=false&characterEncoding=utf8";
+	//Public Key Retrieval is not allowed오류 해결을 위해서는 옵션값 지정해줘야함 & 타임존 설정 & 인코딩설정 필수.
+	private String url = "jdbc:mysql://localhost:3306/reservation?serverTimezone=Asia/Seoul&useSSL=false&characterEncoding=utf8&allowPublicKeyRetrieval=true";
 
 	private String username = "connectuser";
 

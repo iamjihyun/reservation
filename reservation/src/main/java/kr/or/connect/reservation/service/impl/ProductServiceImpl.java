@@ -7,27 +7,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.or.connect.reservation.dao.ReservationDao;
+import kr.or.connect.reservation.dao.ProductDao;
 import kr.or.connect.reservation.dto.Product;
-import kr.or.connect.reservation.service.ReservationService;
+import kr.or.connect.reservation.service.ProductService;
 
 @Service
-public class ReservationServiceImpl implements ReservationService{
-	
+public class ProductServiceImpl implements ProductService{
+	// 실질적으로 데이터의 가공 하는 곳
 	@Autowired
-	ReservationDao rDao;
+	ProductDao ProductDao;
 	
 	@Override
 	@Transactional
 	public List<Product> getProducts(Integer start, Integer cate) {
-		List<Product> list = rDao.selectAll(start, ReservationService.LIMIT, cate);
+		List<Product> list = ProductDao.selectAll(start, ProductService.LIMIT, cate);
 		return list;
 	}
 
 	@Override
 	@Transactional(readOnly=false)
 	public int deleteProduct(int id, String ip) {
-		int deleteCount = rDao.deleteById(id);
+		int deleteCount = ProductDao.deleteById(id);
 		/*Log log = new Log();
 		log.setIp(ip);
 		log.setMethod("delete");
@@ -36,12 +36,13 @@ public class ReservationServiceImpl implements ReservationService{
 		return deleteCount;
 	}
 
+	//add의 리턴값은 void로
 	@Override
 	@Transactional(readOnly=false)
 	public Product addProduct(Product p, String ip) {
-		p.setCreateDate(new Date());
-		int id = rDao.insert(p);
-		p.setId(id);
+		//p.setCreateDate(new Date());
+		int id = ProductDao.insert(p);
+		//p.setId(id);
 		
 /*		Log log = new Log();
 		log.setIp(ip);
@@ -54,7 +55,13 @@ public class ReservationServiceImpl implements ReservationService{
 
 	@Override
 	public int getCount(Integer cate) {
-		return rDao.selectCount(cate);
+		return ProductDao.selectCount(cate);
+	}
+
+	// 공연정보 한 개 셀렉
+	@Override
+	public Product selectOneProduct(int productid) {
+		return ProductDao.selectOneProduct(productid);
 	}
 
 }
