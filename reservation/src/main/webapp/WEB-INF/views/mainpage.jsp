@@ -95,7 +95,7 @@
 			</div>
 			
 			<div class="section_event_lst">
-				<p class="event_lst_txt">바로 예매 가능한 행사가 <span class="data_count pink">10개</span> 있습니다	</p>
+				<p class="event_lst_txt">바로 예매 가능한 행사가 <span class="data_count pink">0개</span> 있습니다	</p>
 				<div class="wrap_event_box">
 					<!-- [D] lst_event_box 가 2컬럼으로 좌우로 나뉨, 더보기를 클릭할때마다 좌우 ul에 li가 추가됨 -->
 					<ul class="lst_event_box">
@@ -117,7 +117,7 @@
 	</div>
 	<footer>
 		<div class="gototop">
-			<a href="#" class="lnk_top"><span class="lnk_top_text">TOP</span>
+			<a href="#" class="lnk_top" onClick="javascript:window.scrollTo(0,0)"><span class="lnk_top_text" onClick="javascript:window.scrollTo(0,0)">TOP</span>
 			</a>
 		</div>
 		<div class="footer">
@@ -127,76 +127,83 @@
 		</div>
 	</footer>
 
+
 	<script>	
 	function clickMoreBtn(target){
-		sendAjax();
+		console.log("-----더보기버튼 클릭 메소드-----");
+		//현재 카테고리Id
+		var categoryId = document.querySelector(".event_tab_lst").currentCategory;
+		
+		//현재 페이지
+		var start = target.currentPage;
+		sendAjax(categoryId,start);
 	}
+	
 	
 	//ajax로 가져온 데이터 화면에 그리기
- 	function makeTemplate(data) {
+ 	function makeTemplate(data, moreNum) {
 		// 템플릿 가져오기.
 	    var html = document.getElementById("itemList").innerHTML;
-	    var resultHTML = "";
-	    var lst_event_box = document.querySelector(".lst_event_box");
-	    lst_event_box.innerHTML = "";
-
-		for (var i = 0; i < data.list.length; i++) {
- 	       resultHTML = html.replace("{id}", data.list[i].id)
-	           .replace("{description}", data.list[i].description)
-	           .replace("{fileName}", data.list[i].fileName)
-	           .replace("{content}", data.list[i].content)
-	           .replace("{placeName}",data.list[i].placeName);
+		
+		// 화면에 그릴 공간 가져오기.
+	    var lst_event_box = document.querySelectorAll(".lst_event_box");
+		var currentPage = document.querySelector(".moreBtn").currentPage;
+		if(currentPage == 2){
+			
+		}
+	    lst_event_box[0].innerHTML = "";
+	    lst_event_box[1].innerHTML = "";		
+	    
+	    //////////////makeTemplate html초기화되는 부분 분리해서 쓸 것.
+	    // 화면에 뿌리기.
+		for (var i = 0; i < data.list.items.length; i++) {
+ 	       var resultHTML = html.replace("{displayInfoId}", data.list.items[i].displayInfoId)
+						        .replace("{productDescription}", data.list.items[i].productDescription)
+						        .replace("{fileName}", data.list.items[i].fileName)
+						        .replace("{productContent}", data.list.items[i].productContent)
+						        .replace("{placeName}", data.list.items[i].placeName)
+					 	        .replace("{productImageUrl}", data.list.items[i].productImageUrl);
 	       
-	       console.log("id2 : " + data.list[i].id);
-	       console.log("description2 : " + data.list[i].description);
-	       lst_event_box.innerHTML += resultHTML;
+	       lst_event_box[i % 2].innerHTML += resultHTML;
 	    }
-	 	// 그릴 공간 설정.
-	    //var lst_event_box = document.querySelector(".lst_event_box");
-	 	console.log("lst_event_box : " + lst_event_box);
-	 	console.log("lst_event_box : " + lst_event_box[1]);
-	    //라인 왼쪽, 오른쪽 두개 나눠서 넣기.인덱스 홀수/ 짝수 구분해서 넣으면 될 것
-	    //왼쪽
-	 	//lst_event_box.innerHTML = resultHTML;
-	 	//오른쪽
-	    //lst_event_box[1] = "";
+	    
+	    var count =document.querySelector(".data_count"); 
+	console.log("count : " + count.innerHTML);
 	  //카운트도 가져와서 적용
+		document.querySelector(".data_count").innerHTML=data.list.totalCount+"개";
 	}
- 	
+	
 	
 	// 페이징 or 더보기버튼을 전역으로 안쓰는 방법이 있는지 궁금 -> data attribute써야하는 것 같음
-	function sendAjax(category, page){
-		console.log("ajax 호출");
-		console.log("들어온 cate값 : " + category);
+	function sendAjax(categoryId=0, start=1){
+
 		var url = "api/products";
-		var start = page == undefined ? 1 : page;
-		var cate = category == undefined ? 0 : category;
+		var start2 = start;
+		var categoryId2 = categoryId;
 		var oReq = new XMLHttpRequest();
 		
-		if(category == undefined){
-			console.log("카테고리 없음");
-		}
-		
+		console.log("-----ajax 메소드-----");
+		console.log("카테고리Id : " + categoryId2);
+		console.log("현재페이지 : " + start2);
 		
  		oReq.addEventListener("load", function() {
-			// 가져온 데이터 담기.
+			// ajax로 DB갔다옴. & 가져온 데이터 담기.
 			var data = JSON.parse(oReq.responseText);
 		    console.log(data);
 		    
-		    // 쿼리셀렉터랑 getElementByClassName이랑 차이가 뭘까
 		    // 카테고리, 페이지 갱신
 		    var newCate = document.querySelector(".event_tab_lst");
-		    newCate.currentCategory = cate;
-		    console.log("현재 카테: " + document.querySelector(".event_tab_lst").currentCategory);
+		    newCate.currentCategory = categoryId2;
+		    console.log("갱신된 카테고리Id: " + document.querySelector(".event_tab_lst").currentCategory);
 		    
 		    var newPage = document.querySelector(".moreBtn");
-		    newPage.currentPage = page;
-		    console.log("현재페이지 : " + document.querySelector(".moreBtn").currentPage);
+		    newPage.currentPage = start2 + 1;
+		    console.log("갱신된 현재 페이지 : " + document.querySelector(".moreBtn").currentPage);
 		    
 		    makeTemplate(data);
 		 });
  		
-		   oReq.open("GET", "api/products?cate=" + cate + "&start=" + start);
+		   oReq.open("GET", "api/products?categoryId=" + categoryId2 + "&start=" + start2);
 		   oReq.send();
 	}
 
@@ -204,35 +211,50 @@
 		//첫페이지 로딩
 		sendAjax();
 	}
+
 	
     // 함수를 제외한 전역변수들은 다 onload함수 안에
     var clickedCategoryName = document.querySelector(".event_tab_lst");
     clickedCategoryName.addEventListener("click", function (evt) {
-
-        // 델리게이션 적용
-        // 클릭한 카테고리 번호 가져오기 
+        
+        // 모든 카테고리 색초기화
+    	var cateList = document.querySelectorAll(".anchor");
+        cateList.forEach(function(element){
+        	element.classList.remove("active");
+        });
+    	
+    	// 델리게이션 적용 & 카테고리 색깔 변경
+        // 데이터셋 카테고리 번호 가져오기 
         var target2 = evt.target;
-        var cate = "";
+        var categoryId = "";
+        
         // 태그 순서 : ul -> li -> a -> span
         if (target2.tagName === "A") {
             console.log("a의 부모태그 li : " + target2.parentNode.dataset.category);            
-            cate = target2.parentNode.dataset.category;
+            categoryId = target2.parentNode.dataset.category;
+            
+            //컬러변경
+            target2.classList.add('active');
             
         } else if (target2.tagName === "SPAN") {
             //console.log("SPAN의 부모태그 li : " + target2.parentNode);
             //console.log("SPAN의 부모태그 li : " + target2.parentElement);
             console.log("SPAN의 부모부모태그 li : " + target2.parentNode.parentNode.dataset.category);
+            categoryId = target2.parentNode.parentNode.dataset.category;
             
-            cate = target2.parentNode.parentNode.dataset.category;
+            //컬러변경
+            target2.parentNode.classList.add('active');           
             
         } else if(target2.tagName === "LI"){
             console.log("li 태그 : " + target2.dataset.category);
+            categoryId = target2.dataset.category;
             
-            cate = target2.dataset.category;
-            
+            //컬러변경****어려움...자식은 여러명일 수 있어서 확실히 선택해주어야 함.
+            target2.children[0].classList.add('active');     
         }
-        console.log("카테클릭 시 카테값 : " + cate);
-        sendAjax(cate, 0);
+        console.log("-----카테고리 클릭 메소드-----");
+        console.log("클릭된 카테고리 값 : " + categoryId);
+        sendAjax(categoryId, 1);
     });
 </script>
 
@@ -251,14 +273,14 @@
 
 	<script type="rv-template" id="itemList">
         <li class="item">
-            <a href="api/product/{id}" class="item_book">
+            <a href="detail" class="item_book">
                 <div class="item_preview">
-                    <img alt="{id}" class="img_thumb" src="http://localhost:8800/reservation/resources/reservation.v1.5/img/{fileName}">
+                    <img alt="{displayInfoId}" class="img_thumb" src="http://localhost:8800/reservation/resources/reservation.v1.5/{productImageUrl}">
                     <span class="img_border"></span>
                 </div>
                 <div class="event_txt">
-                    <h4 class="event_txt_tit"> <span>{description}</span> <small class="sm">{placeName}</small> </h4>
-                    <p class="event_txt_dsc">{content}</p>
+                    <h4 class="event_txt_tit"> <span>{productDescription}</span> <small class="sm">{placeName}</small> </h4>
+                    <p class="event_txt_dsc">{productContent}</p>
                 </div>
             </a>
         </li>

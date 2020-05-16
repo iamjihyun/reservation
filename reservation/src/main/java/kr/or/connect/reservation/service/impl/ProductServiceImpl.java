@@ -1,6 +1,5 @@
 package kr.or.connect.reservation.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.connect.reservation.dao.ProductDao;
 import kr.or.connect.reservation.dto.Product;
+import kr.or.connect.reservation.dto.ProductResponse;
 import kr.or.connect.reservation.service.ProductService;
 
 @Service
@@ -19,9 +19,16 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Override
 	@Transactional
-	public List<Product> getProducts(Integer start, Integer cate) {
+	public ProductResponse getProducts(Integer start, Integer cate) {
 		List<Product> list = ProductDao.selectAll(start, ProductService.LIMIT, cate);
-		return list;
+		ProductResponse productResponse = new ProductResponse();
+		
+		productResponse.setItems(list);
+		
+		//아래에 만들어놓은 메소드 호출.
+		productResponse.setTotalCount(getCount(cate));
+		
+		return productResponse;
 	}
 
 	@Override

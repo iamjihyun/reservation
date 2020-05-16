@@ -17,4 +17,10 @@ public class ProductController {
 		
 		return "mainpage";
 	}
+	
+	@RequestMapping("/detail")
+	public String detail() {
+		
+		return "detail";
+	}
 }

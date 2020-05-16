@@ -4,22 +4,22 @@ public class Product {
 	
 	private int displayInfoId;
 	private String placeName;
-	private String content;
-	private String description;
+	private String productContent;
+	private String productDescription;
 	private int productId;
-	private String fileName;
+	private String productImageUrl;
 	
 	public Product() {}
 
-	public Product(int displayInfoId, String placeName, String content, String description, int productId,
-			String fileName) {
+	public Product(int displayInfoId, String placeName, String productContent, String productDescription, int productId,
+			String productImageUrl) {
 		super();
 		this.displayInfoId = displayInfoId;
 		this.placeName = placeName;
-		this.content = content;
-		this.description = description;
+		this.productContent = productContent;
+		this.productDescription = productDescription;
 		this.productId = productId;
-		this.fileName = fileName;
+		this.productImageUrl = productImageUrl;
 	}
 
 	public int getDisplayInfoId() {
@@ -38,20 +38,20 @@ public class Product {
 		this.placeName = placeName;
 	}
 
-	public String getContent() {
-		return content;
+	public String getProductContent() {
+		return productContent;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setProductContent(String productContent) {
+		this.productContent = productContent;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getProductDescription() {
+		return productDescription;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
 	}
 
 	public int getProductId() {
@@ -62,18 +62,19 @@ public class Product {
 		this.productId = productId;
 	}
 
-	public String getFileName() {
-		return fileName;
+	public String getProductImageUrl() {
+		return productImageUrl;
 	}
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public void setProductImageUrl(String productImageUrl) {
+		this.productImageUrl = productImageUrl;
 	}
 
 	@Override
 	public String toString() {
-		return "Product [displayInfoId=" + displayInfoId + ", placeName=" + placeName + ", content=" + content
-				+ ", description=" + description + ", productId=" + productId + ", fileName=" + fileName + "]";
+		return "Product [displayInfoId=" + displayInfoId + ", placeName=" + placeName + ", productContent="
+				+ productContent + ", productDescription=" + productDescription + ", productId=" + productId
+				+ ", productImageUrl=" + productImageUrl + "]";
 	}
 
 	
