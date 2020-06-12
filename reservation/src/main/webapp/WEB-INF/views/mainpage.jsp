@@ -148,11 +148,10 @@
 		// 화면에 그릴 공간 가져오기.
 	    var lst_event_box = document.querySelectorAll(".lst_event_box");
 		var currentPage = document.querySelector(".moreBtn").currentPage;
-		if(currentPage == 2){
-			
+		if(moreNum != undefined){
+		    lst_event_box[0].innerHTML = "";
+		    lst_event_box[1].innerHTML = "";					
 		}
-	    lst_event_box[0].innerHTML = "";
-	    lst_event_box[1].innerHTML = "";		
 	    
 	    //////////////makeTemplate html초기화되는 부분 분리해서 쓸 것.
 	    // 화면에 뿌리기.
@@ -203,7 +202,7 @@
 		    makeTemplate(data);
 		 });
  		
-		   oReq.open("GET", "api/products?categoryId=" + categoryId2 + "&start=" + start2);
+		   oReq.open("GET", url+"?categoryId=" + categoryId2 + "&start=" + start2);
 		   oReq.send();
 	}
 

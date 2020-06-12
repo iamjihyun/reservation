@@ -8,9 +8,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>네이버 예약</title>
     
-    <link
-	href="<%=request.getContextPath()%>/resources/reservation.v1.5/resevation-html-base/style.css"
-	rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/resources/reservation.v1.5/resevation-html-base/style.css" rel="stylesheet">
 
     <style>
         .container_visual {
@@ -35,8 +33,8 @@
                 <div class="section_visual">
                     <header>
                         <h1 class="logo">
-                            <a href="./mainpage.html" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
-                            <a href="./mainpage.html" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
+                            <a href="./" class="lnk_logo" title="네이버"> <span class="spr_bi ico_n_logo">네이버</span> </a>
+                            <a href="./" class="lnk_logo" title="예약"> <span class="spr_bi ico_bk_logo">예약</span> </a>
                         </h1>
                         <a href="./myreservation.html" class="btn_my"> <span class="viewReservation" title="예약확인">예약확인</span> </a>
                     </header>
@@ -269,6 +267,29 @@
 	
 	function sendAjax(){
 		console.log("ajax 호출");
+
+		var url = "api/products/1";
+		var oReq = new XMLHttpRequest();
+		
+ 		oReq.addEventListener("load", function() {
+			// ajax로 DB갔다옴. & 가져온 데이터 담기.
+			var data = JSON.parse(oReq.responseText);
+		    console.log(data);
+		    /* 
+		    // 카테고리, 페이지 갱신
+		    var newCate = document.querySelector(".event_tab_lst");
+		    newCate.currentCategory = categoryId2;
+		    console.log("갱신된 카테고리Id: " + document.querySelector(".event_tab_lst").currentCategory);
+		    
+		    var newPage = document.querySelector(".moreBtn");
+		    newPage.currentPage = start2 + 1;
+		    console.log("갱신된 현재 페이지 : " + document.querySelector(".moreBtn").currentPage);
+		    
+		    makeTemplate(data); */
+		 });
+ 		
+		   oReq.open("GET", url);
+		   oReq.send();
 	}
 	
 	window.onload = function(){
