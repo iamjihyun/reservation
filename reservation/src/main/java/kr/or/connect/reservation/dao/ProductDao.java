@@ -45,7 +45,11 @@ public class ProductDao {
 			return jdbc.query(SELECT_PAGING, params, rowMapper);	
 		}
 		
-		
+	}
+	
+	public Product selectOneProduct(int productid) {
+		Map<String, ?> params = Collections.singletonMap("productid", productid);
+		return jdbc.queryForObject(SELECT_BY_ID, params, rowMapper);
 	}
 	
 	//한개 추가
@@ -70,9 +74,5 @@ public class ProductDao {
 		}
 	}
 
-	public Product selectOneProduct(int productid) {
-		Map<String, ?> params = Collections.singletonMap("productid", productid);
-		return jdbc.queryForObject(SELECT_BY_ID, params, rowMapper);
-	}
 
 }
