@@ -11,6 +11,7 @@ import kr.or.connect.reservation.dao.ProductDao;
 import kr.or.connect.reservation.dto.Comment;
 import kr.or.connect.reservation.dto.CommentImage;
 import kr.or.connect.reservation.dto.DisplayInfo;
+import kr.or.connect.reservation.dto.DisplayInfoImage;
 import kr.or.connect.reservation.dto.DisplayInfoResponse;
 import kr.or.connect.reservation.dto.Product;
 import kr.or.connect.reservation.dto.ProductResponse;
@@ -27,15 +28,53 @@ public class ProductServiceImpl implements ProductService{
 	public ProductResponse getProducts(Integer start, Integer cate) {
 		List<Product> list = productDao.selectAll(start, ProductService.LIMIT, cate);
 		ProductResponse productResponse = new ProductResponse();
-		
+		System.out.println("서비스임플1");
 		productResponse.setItems(list);
 		
 		//아래에 만들어놓은 메소드 호출.
 		productResponse.setTotalCount(getCount(cate));
-		
+		System.out.println("서비스임플2");
 		return productResponse;
 	}
 
+	
+	//상세페이지로 보낼 DisplayInfoResponse
+	public DisplayInfoResponse getDisplayInfoResponse(int displayInfoId) {
+		DisplayInfoResponse response = new DisplayInfoResponse();
+		
+		////데이터 가져오기
+		// 1. 전시정보 한 개 조회
+		DisplayInfo displayInfo = getDisplayInfo(displayInfoId);
+		
+		// 2. 전시정보 이미지정보 조회
+		DisplayInfoImage displayInfoImage = getDisplayInfoImage(displayInfoId);
+		
+		// 3. 한줄평 리스트 조회
+		List<Comment> comments = getComments(displayInfo.getProductId());
+		
+		//int commentCount = getCommentListCount(displayInfo.getProductId()) ; 
+		//한줄평 총 갯수
+		getCommentListCount(displayInfo.getProductId());
+		
+		
+		
+		////세팅
+		// 1. 전시정보 세팅
+		response.setDisplayInfo(displayInfo);
+		
+		// 2. 전시정보 이미지 세팅
+		response.setDisplayInfoImage(displayInfoImage);
+		
+		// 3. 한줄평리스트 셋팅
+		response.setComments(comments);
+
+		
+		
+		return response;
+	}
+
+	
+	
 	// 공연정보 한 개 셀렉
 	@Override
 	public DisplayInfo getDisplayInfo(int displayInfoId) {
@@ -54,36 +93,18 @@ public class ProductServiceImpl implements ProductService{
 		//이미지 0~3개
 		List<CommentImage> commentImages = new ArrayList<>();;
 		for(int i = 0; i < comments.size(); i++) {
-			CommentImage commentImage = getCommentImage(comments.get(i).getCommentId());
-			commentImages.
+			//CommentImage commentImage = getCommentImage(comments.get(i).getCommentId());
+			//commentImages.
 		}
 		//한줄평 댓글 이미지 조회는 어디서하는가?
 		
 		return comments;
 	}
-	
-	//상세페이지로 보낼 DisplayInfoResponse
-	public DisplayInfoResponse getDisplayInfoResponse(int displayInfoId) {
-		DisplayInfoResponse response = new DisplayInfoResponse();
-		
-		// 상세정보 한 개 조회
-		DisplayInfo displayInfo = getDisplayInfo(displayInfoId);
-		
-		// 한줄평 리스트 조회
-		List<Comment> comments = getComments(displayInfo.getProductId());
-		//int commentCount = getCommentListCount(displayInfo.getProductId()) ; 
-		//한줄평 총 갯수
-		getCommentListCount(displayInfo.getProductId());
-		
-		////세팅
-		// 전시정보 세팅
-		response.setDisplayInfo(displayInfo);
-		
-		
-		// 한줄평리스트 셋팅
-		response.setComments(comments);
 
-		return response;
+	//전시정보 이미지 셀렉
+	private DisplayInfoImage getDisplayInfoImage(int displayInfoId) {
+		DisplayInfoImage displayInfoImage = productDao.selectOneDisplayInfoImage(displayInfoId);
+		return displayInfoImage;
 	}
 
 	@Override

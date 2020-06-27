@@ -36,7 +36,7 @@ import kr.or.connect.reservation.service.ProductService;
 			//2 : 4~7 4*1
 			//3 : 8~11 4*2
 			//4 : 12~16 4*3
-			
+			System.out.println("작동?");
 			//전체 데이터 가져오기.
 			ProductResponse productResponse = productService.getProducts(start, categoryId);			
 

@@ -153,28 +153,6 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="list_item">
-                                    <div>
-                                        <div class="review_area no_img">
-                                            <h4 class="resoc_name"></h4>
-                                            <p class="review">너무 재밌게봤구요~<br>마지막공연 후 뒷풀이도 잘봤습니다</p>
-                                        </div>
-                                        <div class="info_area">
-                                            <div class="review_info"> <span class="grade">5.0</span> <span class="name">yyck****</span> <span class="date">2017.3.5. 방문</span> </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list_item">
-                                    <div>
-                                        <div class="review_area no_img">
-                                            <h4 class="resoc_name"></h4>
-                                            <p class="review">좋은 공연이었습니다. <br>머큐쇼역활 하신분의 열창이 기억에 남는 반면에,,, 로미오는 별로 기억에 남지 않네요..</p>
-                                        </div>
-                                        <div class="info_area">
-                                            <div class="review_info"> <span class="grade">4.0</span> <span class="name">xero****</span> <span class="date">2017.3.4. 방문</span> </div>
-                                        </div>
-                                    </div>
-                                </li>
                             </ul>
                         </div>
                         <p class="guide"> <i class="spr_book2 ico_bell"></i> <span>네이버 예약을 통해 실제 방문한 이용자가 남긴 평가입니다.</span> </p>
@@ -264,6 +242,38 @@
     <div id="photoviwer"></div>
 
 	<script>
+	//템플릿으로 화면에 그리기.
+ 	function makeTemplate(data) {
+		// 템플릿 가져오기.
+	    var html = document.getElementById("commentList").innerHTML;
+		
+		// 화면에 그릴 공간 가져오기.
+	    var comment_box = document.querySelector(".list_item");
+		
+	    comment_box.innerHTML = "";
+		
+	    
+	    //////////////makeTemplate html초기화되는 부분 분리해서 쓸 것.
+	    // 화면에 뿌리기.
+		for (var i = 0; i < data.comments.length; i++) {
+ 	       var resultHTML = html.replace("{comment}", data.comments[i].comment)
+						        .replace("{score}", data.comments[i].score.toFixed(1))
+						        .replace("{reservationDate}", data.comments[i].reservationDate)
+						        /* .replace("{productContent}", data.displayInfoResponse.items[i].productContent)
+						        .replace("{placeName}", data.displayInfoResponse.items[i].placeName)
+					 	        .replace("{productImageUrl}", data.displayInfoResponse.items[i].productImageUrl) */;
+	    
+ 	      comment_box.innerHTML += resultHTML;
+		}
+	    
+	    //var count =document.querySelector(".data_count"); 
+		//console.log("count : " + count.innerHTML);
+	  //카운트도 가져와서 적용
+		//document.querySelector(".data_count").innerHTML=data.list.totalCount+"개";
+	}
+	
+	
+	
 	
 	function sendAjax(){
 		console.log("ajax 호출");
@@ -275,17 +285,8 @@
 			// ajax로 DB갔다옴. & 가져온 데이터 담기.
 			var data = JSON.parse(oReq.responseText);
 		    console.log(data);
-		    /* 
-		    // 카테고리, 페이지 갱신
-		    var newCate = document.querySelector(".event_tab_lst");
-		    newCate.currentCategory = categoryId2;
-		    console.log("갱신된 카테고리Id: " + document.querySelector(".event_tab_lst").currentCategory);
 		    
-		    var newPage = document.querySelector(".moreBtn");
-		    newPage.currentPage = start2 + 1;
-		    console.log("갱신된 현재 페이지 : " + document.querySelector(".moreBtn").currentPage);
-		    
-		    makeTemplate(data); */
+		    makeTemplate(data);
 		 });
  		
 		   oReq.open("GET", url);
@@ -299,6 +300,22 @@
 	
 	</script>
 
+<!-- 한줄평 템플릿-->
+<script type="rv-template" id="commentList">
+   <li class="list_item">
+       <div>
+           <div class="review_area">
+               <div class="thumb_area">
+                   <a href="#" class="thumb" title="이미지 크게 보기"> <img width="90" height="90" class="img_vertical_top" src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300" alt="리뷰이미지"> </a> <span class="img_count" style="display:none;">1</span></div>
+               <h4 class="resoc_name">{description}</h4>
+               <p class="review">{comment}</p>
+           </div>
+           <div class="info_area">
+               <div class="review_info"> <span class="grade">{score}</span> <span class="name">{reservationName}</span> <span class="date">{reservationDate} 방문</span> </div>
+           </div>
+       </div>
+   </li>
+</script>
 </body>
 
 
