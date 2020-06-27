@@ -174,11 +174,13 @@
 	
 	
 	// 페이징 or 더보기버튼을 전역으로 안쓰는 방법이 있는지 궁금 -> data attribute써야하는 것 같음
-	function sendAjax(categoryId=0, start=1){
+	function sendAjax(categoryId, start){
 
+/* 		var start = start == undefined ? 1 : start;
+		var cate = categoryId == undefined ? 0 : categoryId; */
 		var url = "api/products";
-		var start2 = start;
-		var categoryId2 = categoryId;
+		var start2 = start == undefined ? 1 : start;
+		var categoryId2 = categoryId == undefined ? 0 : categoryId;
 		var oReq = new XMLHttpRequest();
 		
 		console.log("-----ajax 메소드-----");

@@ -13,7 +13,7 @@ public class DisplayInfo {//상품전시 모델
 	private String placeName;//전시장
 	private String placeStreet;//전시 도로명
 	private String productContent;//상품내용
-	private String productDespription;//상품설명
+	private String productDescription;//상품설명
 	private String productEvent;//상품이벤트
 	private int productId;//상품id
 	private String telephone;//전화번호
@@ -21,11 +21,9 @@ public class DisplayInfo {//상품전시 모델
 	
 	public DisplayInfo() {}
 
-
-
 	public DisplayInfo(int categoryId, String categoryName, String createDate, int displayInfoId, String email,
 			String homepage, String modifyDate, String openingHours, String placeLot, String placeName,
-			String placeStreet, String productContent, String productDespription, String productEvent, int productId,
+			String placeStreet, String productContent, String productDescription, String productEvent, int productId,
 			String telephone, int commentCount) {
 		super();
 		this.categoryId = categoryId;
@@ -40,14 +38,12 @@ public class DisplayInfo {//상품전시 모델
 		this.placeName = placeName;
 		this.placeStreet = placeStreet;
 		this.productContent = productContent;
-		this.productDespription = productDespription;
+		this.productDescription = productDescription;
 		this.productEvent = productEvent;
 		this.productId = productId;
 		this.telephone = telephone;
 		this.commentCount = commentCount;
 	}
-
-
 
 	public int getCategoryId() {
 		return categoryId;
@@ -145,12 +141,12 @@ public class DisplayInfo {//상품전시 모델
 		this.productContent = productContent;
 	}
 
-	public String getProductDespription() {
-		return productDespription;
+	public String getProductDescription() {
+		return productDescription;
 	}
 
-	public void setProductDespription(String productDespription) {
-		this.productDespription = productDespription;
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
 	}
 
 	public String getProductEvent() {
@@ -177,29 +173,24 @@ public class DisplayInfo {//상품전시 모델
 		this.telephone = telephone;
 	}
 
-	
 	public int getCommentCount() {
 		return commentCount;
 	}
 
-
-
 	public void setCommentCount(int commentCount) {
 		this.commentCount = commentCount;
 	}
-
-
 
 	@Override
 	public String toString() {
 		return "DisplayInfo [categoryId=" + categoryId + ", categoryName=" + categoryName + ", createDate=" + createDate
 				+ ", displayInfoId=" + displayInfoId + ", email=" + email + ", homepage=" + homepage + ", modifyDate="
 				+ modifyDate + ", openingHours=" + openingHours + ", placeLot=" + placeLot + ", placeName=" + placeName
-				+ ", placeStreet=" + placeStreet + ", productContent=" + productContent + ", productDespription="
-				+ productDespription + ", productEvent=" + productEvent + ", productId=" + productId + ", telephone="
+				+ ", placeStreet=" + placeStreet + ", productContent=" + productContent + ", productDescription="
+				+ productDescription + ", productEvent=" + productEvent + ", productId=" + productId + ", telephone="
 				+ telephone + ", commentCount=" + commentCount + "]";
 	}
-	
+
 	
 	
 }
