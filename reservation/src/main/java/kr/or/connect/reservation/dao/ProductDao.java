@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import kr.or.connect.reservation.dto.*;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -16,12 +17,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
-
-import kr.or.connect.reservation.dto.Comment;
-import kr.or.connect.reservation.dto.DisplayInfo;
-import kr.or.connect.reservation.dto.DisplayInfoImage;
-import kr.or.connect.reservation.dto.DisplayInfoResponse;
-import kr.or.connect.reservation.dto.Product;
 
 @Repository
 public class ProductDao {
@@ -31,6 +26,7 @@ public class ProductDao {
 	 private RowMapper<DisplayInfo> rowMapper2 = BeanPropertyRowMapper.newInstance(DisplayInfo.class);
 	 private RowMapper<DisplayInfoImage> disInfoImageRowMapper = BeanPropertyRowMapper.newInstance(DisplayInfoImage.class);
 	 private RowMapper<Comment> commentRowMapper = BeanPropertyRowMapper.newInstance(Comment.class);
+	 private RowMapper<ProductImage> productImageRowMapper = BeanPropertyRowMapper.newInstance(ProductImage.class);
 	 
 	 public ProductDao(DataSource dataSource) {
 	        this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -83,7 +79,13 @@ public class ProductDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
+	//공연정보 상세 이미지들 조회
+	public List<ProductImage> selectProductDetailImages(int displayInfoId) {
+		Map<String, ?> params = Collections.singletonMap("displayInfoId", displayInfoId);
+	 	return jdbc.query(SELECT_PRODUCT_DETAIL_IMAGES, params, productImageRowMapper);
+	}
+
 	public DisplayInfoImage selectOneDisplayInfoImage(int displayInfoId) {
 		Map<String, ?> params = Collections.singletonMap("displayInfoId", displayInfoId);
 		return jdbc.queryForObject(SELECT_ONE_DISPLAY_INFO_IMAGE, params, disInfoImageRowMapper);
@@ -103,5 +105,6 @@ public class ProductDao {
 		SqlParameterSource params = new BeanPropertySqlParameterSource(p);
 		return insertAction.executeAndReturnKey(params).intValue();
 	}
+
 
 }

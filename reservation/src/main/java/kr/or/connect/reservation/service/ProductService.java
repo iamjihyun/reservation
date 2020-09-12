@@ -2,11 +2,7 @@ package kr.or.connect.reservation.service;
 
 import java.util.List;
 
-import kr.or.connect.reservation.dto.Comment;
-import kr.or.connect.reservation.dto.DisplayInfo;
-import kr.or.connect.reservation.dto.DisplayInfoResponse;
-import kr.or.connect.reservation.dto.Product;
-import kr.or.connect.reservation.dto.ProductResponse;
+import kr.or.connect.reservation.dto.*;
 
 public interface ProductService {
 	public static final Integer LIMIT = 4;
@@ -31,4 +27,6 @@ public interface ProductService {
 
 	int getCommentListCount(int productId);
 
+	//공연정보 한개의 상세 이미지들 조회
+	public List<ProductImage> getProductImages(int displayInfoId);
 }

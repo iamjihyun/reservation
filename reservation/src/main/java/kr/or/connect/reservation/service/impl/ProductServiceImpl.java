@@ -3,18 +3,12 @@ package kr.or.connect.reservation.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.or.connect.reservation.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.connect.reservation.dao.ProductDao;
-import kr.or.connect.reservation.dto.Comment;
-import kr.or.connect.reservation.dto.CommentImage;
-import kr.or.connect.reservation.dto.DisplayInfo;
-import kr.or.connect.reservation.dto.DisplayInfoImage;
-import kr.or.connect.reservation.dto.DisplayInfoResponse;
-import kr.or.connect.reservation.dto.Product;
-import kr.or.connect.reservation.dto.ProductResponse;
 import kr.or.connect.reservation.service.ProductService;
 
 @Service
@@ -55,6 +49,8 @@ public class ProductServiceImpl implements ProductService{
 		//int commentCount = getCommentListCount(displayInfo.getProductId()) ; 
 		//한줄평 총 갯수
 		getCommentListCount(displayInfo.getProductId());
+
+		List<ProductImage> productImages = getProductImages(displayInfoId);
 		
 		
 		
@@ -68,14 +64,24 @@ public class ProductServiceImpl implements ProductService{
 		// 3. 한줄평리스트 셋팅
 		response.setComments(comments);
 
+		// 4. 공연정보 한개의 상세 이미지 셋팅
+		response.setProductImages(productImages);
+
 		
 		
 		return response;
 	}
 
-	
-	
-	// 공연정보 한 개 셀렉
+	// 공연 정보 한 개의 상세 이미지들 조회
+	@Override
+	public List<ProductImage> getProductImages(int displayInfoId) {
+		List<ProductImage> productImages = productDao.selectProductDetailImages(displayInfoId);
+		return  productImages;
+	}
+
+
+
+	// 공연 정보 한 개 셀렉
 	@Override
 	public DisplayInfo getDisplayInfo(int displayInfoId) {
 		DisplayInfo displayInfo = productDao.selectOneDisplayInfo(displayInfoId);

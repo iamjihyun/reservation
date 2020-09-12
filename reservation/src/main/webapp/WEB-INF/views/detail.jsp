@@ -259,9 +259,10 @@
  	       var resultHTML = html.replace("{comment}", data.comments[i].comment)
 						        .replace("{score}", data.comments[i].score.toFixed(1))
 						        .replace("{reservationDate}", data.comments[i].reservationDate)
-						        /* .replace("{productContent}", data.displayInfoResponse.items[i].productContent)
-						        .replace("{placeName}", data.displayInfoResponse.items[i].placeName)
-					 	        .replace("{productImageUrl}", data.displayInfoResponse.items[i].productImageUrl) */;
+						        .replace("{reservationName}", data.comments[i].reservationName)
+                                .replace("{description}", data.displayInfo.productDescription)
+               /* .replace("{placeName}", data.displayInfoResponse.items[i].placeName)
+                .replace("{productImageUrl}", data.displayInfoResponse.items[i].productImageUrl) */;
 	    
  	      comment_box.innerHTML += resultHTML;
 		}
@@ -306,7 +307,11 @@
        <div>
            <div class="review_area">
                <div class="thumb_area">
-                   <a href="#" class="thumb" title="이미지 크게 보기"> <img width="90" height="90" class="img_vertical_top" src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300" alt="리뷰이미지"> </a> <span class="img_count" style="display:none;">1</span></div>
+                   <a href="#" class="thumb" title="이미지 크게 보기">
+                       <img width="90" height="90" class="img_vertical_top" src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300" alt="리뷰이미지">
+                   </a>
+                   <span class="img_count" style="display:none;">1</span>
+               </div>
                <h4 class="resoc_name">{description}</h4>
                <p class="review">{comment}</p>
            </div>

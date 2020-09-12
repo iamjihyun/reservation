@@ -50,12 +50,12 @@ public class ProductDaoSqls {
 			+ ",A.modify_date "
 			+ ",B.description 		AS productDescription "
 			+ ",B.content 		AS productContent "
-			+ ", C."
+			+ ""
 			+ "FROM display_info 					 AS A "
 			+ "JOIN product 	 					 AS B ON B.id = A.product_id "
-			+ "LEFT OUTER JOIN display_info_image	 AS B ON B.display_info_id = A.id "
-			+ "LEFT OUTER JOIN file_info			 AS C ON C.id = B.file_id "
-			+ "WHERE id = :displayInfoId ";
+			//+ "LEFT OUTER JOIN display_info_image	 AS B ON B.display_info_id = A.id "
+			//+ "LEFT OUTER JOIN file_info			 AS C ON C.id = B.file_id "
+			+ "WHERE A.id = :displayInfoId ";
 
 	// 전시정보 이미지 한 개 조회
 	public static final String SELECT_ONE_DISPLAY_INFO_IMAGE = "SELECT "
@@ -76,7 +76,7 @@ public class ProductDaoSqls {
 	public static final String SELECT_COMMENT = "SELECT"
 			+ " A.id					 	AS commentId"
 			+ ",A.product_id				AS productId"				
-			+ ",A.reservation_info_id   	AS reservationInfoId"  
+			+ ",A.reservation_info_id   	AS reservationInfoId"
 			+ ",A.score               		AS score"              
 			+ ",A.comment              		AS comment"            
 			+ ",A.create_date           	AS createDate"         
@@ -86,7 +86,7 @@ public class ProductDaoSqls {
 			+ ",B.reservation_email      	AS reservationEmail"  
 			+ ",B.reservation_date       	AS reservationDate"    
 			+ " "
-			+ " from reservation_user_comment 		 			AS A "
+			+ "from reservation_user_comment 		 			AS A "
 			+ "LEFT OUTER JOIN reservation_info 				AS B on(A.reservation_info_id = B.id) "
 			+ "LEFT OUTER JOIN reservation_user_comment_image   AS C on(B.id = C.reservation_info_id) "
 			+ "LEFT OUTER JOIN file_info 						AS D on(C.file_id = D.id)"
@@ -95,8 +95,20 @@ public class ProductDaoSqls {
 			+ "ORDER BY A.create_date desc limit 1, :limit";
 	
 	public static final String SELECT_COMMENT_COUNT = "SELECT count(*) from reservation_user_comment";
-	
 
+	public static final String SELECT_PRODUCT_DETAIL_IMAGES = "SELECT "
+			+ " contentType "
+			+ ",createDate "
+			+ ",deleteFlag "
+			+ ",id AS fileInfoId "
+			+ ",fileName "
+			+ ",modifyDate "
+			+ ",productId "
+			+ ",productImageId "
+			+ ",saveFileName "
+			+ ",type "
+			+ "FROM file_info "
+			+ "WHERE (file_name LIKE %:displayInfoId_ma% AND file_name LIKE %:displayInfoId_et%)";
 	
 	
 	
