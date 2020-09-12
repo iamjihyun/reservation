@@ -150,7 +150,7 @@
 		var currentPage = document.querySelector(".moreBtn").currentPage;
 		if(moreNum != undefined){
 		    lst_event_box[0].innerHTML = "";
-		    lst_event_box[1].innerHTML = "";					
+		    lst_event_box[1].innerHTML = "";
 		}
 	    
 	    //////////////makeTemplate html초기화되는 부분 분리해서 쓸 것.
