@@ -166,7 +166,7 @@
 	       lst_event_box[i % 2].innerHTML += resultHTML;
 	    }
 	    
-	    var count =document.querySelector(".data_count"); 
+	    var count = document.querySelector(".data_count");
 	console.log("count : " + count.innerHTML);
 	  //카운트도 가져와서 적용
 		document.querySelector(".data_count").innerHTML=data.list.totalCount+"개";
