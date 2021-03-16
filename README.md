@@ -2,7 +2,7 @@
 공연예약 WEB프로젝트 스터디
 
 ## 사용기술
-* REST API(RESTful API) : REST 아키텍처의 제약 조건을 준수하는 애플리케이션 프로그래밍 인터페이스를 뜻함
+* RESTful API(RESTful API) : REST 아키텍처의 제약 조건을 준수하는 애플리케이션 프로그래밍 인터페이스를 뜻함
 * Spring Framework
 
 ## 메인
